@@ -5,12 +5,6 @@ import presetsData from '../assets/presetsData'
 
 Vue.use(Vuex)
 
-const MATCH_PERIOD_HEADER = RegExp('(.*lukio.*)', 'g')
-const MATCH_BLOCK = RegExp('(?:\\n *)([A-ZÖÄ]{2,}.*)', 'g')
-const MATCH_COURSE = RegExp(
-  '([A-ZÖÄ]+[a-zöä]*(?:[A-ZÖÄ ])*\\d*[A-ZÖÄ]*(?:\\/I+)*)(?:[.](?:\\d{1,3}|[a-zöä]+\\d*|[A-ZÄÖ]+\\/[a-zöä]+|[A-ZÄÖ]\\d*|)(?:[ =]+[A-ZÖÄa-zöä]+[0-9]+)*(?:\\([^(]*\\))*(?: \\d\\d[A-ZÄ*])*(?: [a-zäö 0-9]+[A-Z])*)',
-  'g')
-
 let createId = function () {
     return '_' + Math.random().toString(36).substr(2, 9)
 }
@@ -48,65 +42,6 @@ const actions = {
     /*==============================================================
         Trays
     ==============================================================*/
-    submitText ({ commit }, trayText) {
-        let parts = trayText.split(MATCH_PERIOD_HEADER).
-          filter(item => item.trim())
-        let termHeaders = []
-        let termsBlocks = []
-
-        for (let part of parts) {
-            if (part.match(MATCH_PERIOD_HEADER) && termHeaders.length ===
-              termsBlocks.length) {
-                termHeaders.push(part)
-            } else if (part.match(MATCH_BLOCK) && termHeaders.length >=
-              termsBlocks.length) {
-                let termsBlocksSeparated = [...part.matchAll(MATCH_BLOCK)]
-                let coursesOfCurrentBlock = []
-                for (const currentBlock of termsBlocksSeparated) {
-                    let courses = [...currentBlock[1].matchAll(MATCH_COURSE)]
-                    coursesOfCurrentBlock.push(courses.sort())
-                }
-                termsBlocks.push(coursesOfCurrentBlock)
-            }
-        }
-        let trayData = {}
-        let courses = {}
-        let blockSelections = {}
-
-        for (const [termIndex, blocks] of termsBlocks.entries()) {
-            let currentPeriod = trayData[termIndex] = {
-                header: termHeaders[termIndex],
-                data: {},
-            }
-            for (const [blockIndex, block] of blocks.entries()) {
-                let currentBlock = currentPeriod.data[blockIndex] = {
-                    id: [termIndex, blockIndex],
-                    data: {},
-                }
-                blockSelections[[termIndex, blockIndex].toString()] = []
-                for (const [courseIndex, [fullName, shortName]] of block.entries()) {
-                    let courseID = [termIndex, blockIndex, courseIndex]
-                    let firstEncounter = !(shortName in courses)
-
-                    currentBlock.data[courseIndex] = {
-                        i: courseID,
-                        s: shortName,
-                    }
-                    if (firstEncounter) {
-                        courses[shortName] = {
-                            f: fullName,
-                            s: !1,
-                            v: !0,
-                            i: [],
-                        }
-                    } else {
-                        courses[shortName].i.push(courseID)
-                    }
-                }
-            }
-        }
-        commit('setTray', { trayData, courses, blockSelections })
-    },
     submitPreset ({ commit }, presetName) {
         let preset = presetsData[presetName]
         commit('setTray', preset)

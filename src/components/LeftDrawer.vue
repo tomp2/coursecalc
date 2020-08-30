@@ -323,8 +323,6 @@ export default {
 
             if (presetName !== 'None') {
                 this.$store.dispatch('submitPreset', presetName)
-            } else if (this.textareaValue) {
-                this.$store.dispatch('submitText', this.textareaValue)
             }
         },
 

@@ -5,7 +5,7 @@
         app
         clipped
         right
-        class="elevation-2"
+        class="elevation-2 scroll-visible"
         :width="$vuetify.breakpoint.width >= 900 ? 300 : 210"
     >
         <v-container class="fill-height align-start" fluid>
@@ -114,5 +114,8 @@ export default {
 
 .odd {
     background-color: rgba(92, 107, 192, 0.15);
+}
+.scroll-visible {
+    overflow-y: visible;
 }
 </style>

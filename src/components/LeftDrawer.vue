@@ -236,7 +236,7 @@
 </template>
 
 <script>
-import presetOptions from '../assets/presetOptions'
+import presetOptions from '../../public/presetOptions'
 import {
     mdiPlusBoxOutline, mdiZipDisk, mdiFolderOpenOutline,
     mdiHelpCircleOutline, mdiCommentQuoteOutline, mdiDelete

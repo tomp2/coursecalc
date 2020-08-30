@@ -49,16 +49,6 @@
                                 persistent-hint
                             ></v-select>
 
-                            <v-card-subtitle>
-                                Or optionally:
-                            </v-card-subtitle>
-
-                            <v-textarea
-                                v-model="textareaValue"
-                                solo
-                                clearable
-                                label="Paste your whole course tray here"
-                            ></v-textarea>
                         </v-col>
                     </v-row>
                 </v-container>

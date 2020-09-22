@@ -46,11 +46,11 @@
 </template>
 
 <script>
-import CourseOption from './Course_Option'
+import CourseOption from './Course_Option';
 
 export default {
     name: 'RightDrawer',
-    components: {CourseOption},
+    components: { CourseOption },
     props: ['show'],
     data: () => ({
         loading: false,
@@ -58,53 +58,53 @@ export default {
     }),
     methods: {
         selectAll() {
-            this.loading = true
+            this.loading = true;
             this.$store.dispatch('setCourseVisibilityAll', true).then(() => {
-                this.loading = false
-            })
+                this.loading = false;
+            });
         },
         deSelectAll() {
-            this.loading = true
+            this.loading = true;
             this.$store.dispatch('setCourseVisibilityAll', false).then(() => {
-                this.loading = false
-            })
+                this.loading = false;
+            });
         },
         dim: function (int) {
             if (int % 2 === 0) {
-                return 'px-2 py-1 ma-1 elevation-1 rounded even'
+                return 'px-2 py-1 ma-1 elevation-1 rounded even';
             } else {
-                return 'px-2 py-1 ma-1 elevation-1 rounded odd'
+                return 'px-2 py-1 ma-1 elevation-1 rounded odd';
             }
         },
     },
     computed: {
         allCourses() {
-            return this.$store.getters.courses
+            return this.$store.getters.courses;
         },
         subjectList() {
-            let courses = [...Object.keys(this.allCourses)].sort()
-            let MATCH = RegExp('[A-ZÄÖ ]+', 'g')
-            let data = {}
+            let courses = [...Object.keys(this.allCourses)].sort();
+            let MATCH = RegExp('[A-ZÄÖ ]+', 'g');
+            let data = {};
             for (const course of courses) {
-                let subject = course.match(MATCH)[0]
+                let subject = course.match(MATCH)[0];
                 if (data[subject]) {
-                    data[subject].push(course)
+                    data[subject].push(course);
                 } else if (subject.length > 0) {
-                    data[subject] = [course]
+                    data[subject] = [course];
                 }
             }
-            return data
+            return data;
         },
     },
     watch: {
         show() {
-            this.visible = this.show
+            this.visible = this.show;
         },
         visible() {
-            this.$emit('update:rightDrawerShow', this.visible)
+            this.$emit('update:rightDrawerShow', this.visible);
         },
     },
-}
+};
 </script>
 
 <style scoped>

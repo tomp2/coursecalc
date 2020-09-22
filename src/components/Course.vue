@@ -1,7 +1,13 @@
 <template>
-    <a v-show="isVisible" type="button"
-       :class="['c mb-1', selectionStatus, this.$vuetify.theme.dark ? 'dark' : '']"
-       @click="select"
+    <a
+        v-show="isVisible"
+        type="button"
+        :class="[
+            'c mb-1',
+            selectionStatus,
+            this.$vuetify.theme.dark ? 'dark' : '',
+        ]"
+        @click="select"
     >
         {{ this.otherValues.f }}
     </a>
@@ -11,102 +17,97 @@
 export default {
     name: 'Course',
     props: ['course'],
-    data () {
+    data() {
         return {
             courseID: this.course.i,
             short: this.course.s,
-        }
+        };
     },
     computed: {
-        otherValues () {
-            return this.$store.getters.courseData[this.short]
+        otherValues() {
+            return this.$store.getters.courseData[this.short];
         },
-        isVisible () {
-            return this.otherValues.v
+        isVisible() {
+            return this.otherValues.v;
         },
-        isSelected () {
-            return this.$store.getters.courseData[this.short].s
+        isSelected() {
+            return this.$store.getters.courseData[this.short].s;
         },
-        strCourseID () {
-            return this.courseID.toString()
+        strCourseID() {
+            return this.courseID.toString();
         },
-        strParentBlockID () {
-            return this.courseID.slice(0, 2).toString()
+        strParentBlockID() {
+            return this.courseID.slice(0, 2).toString();
         },
-        parentBlockSelections () {
-            return this.$store.getters.blockData[this.strParentBlockID]
+        parentBlockSelections() {
+            return this.$store.getters.blockData[this.strParentBlockID];
         },
-        selectionStatus () {
+        selectionStatus() {
             if (this.isSelected) {
                 if (this.strCourseID === this.parentBlockSelections[0]) {
-                    return 'c_selected'
-                } else if (this.parentBlockSelections.includes(this.strCourseID)) {
-                    return 'c_forced'
+                    return 'c_selected';
+                } else if (
+                    this.parentBlockSelections.includes(this.strCourseID)
+                ) {
+                    return 'c_forced';
                 } else {
-                    return 'c_selected--other'
+                    return 'c_selected--other';
                 }
             } else if (this.parentBlockSelections.length > 0) {
-                return 'c_inactive--unavailable'
+                return 'c_inactive--unavailable';
             } else {
-                return 'c_available'
+                return 'c_available';
             }
         },
     },
     methods: {
-        select () {
-            let value = 'none'
+        select() {
+            let value = 'none';
             switch (this.selectionStatus) {
                 case 'c_available':
-                    value = true
-                    break
+                    value = true;
+                    break;
                 case 'c_inactive--unavailable':
                     if (!this.isSelected) {
-                        value = true
+                        value = true;
                     }
-                    break
+                    break;
                 case 'c_selected':
-                    value = false
-                    break
+                    value = false;
+                    break;
                 case 'c_forced':
-                    value = false
-                    break
+                    value = false;
+                    break;
             }
             if (value !== 'none') {
                 if (value) {
-                    this.$store.commit(
-                        'addSelectionToBlock',
-                        {
-                            strParentBlockID: this.strParentBlockID,
-                            strCourseID: this.strCourseID,
-                        },
-                    )
+                    this.$store.commit('addSelectionToBlock', {
+                        strParentBlockID: this.strParentBlockID,
+                        strCourseID: this.strCourseID,
+                    });
                 } else {
-                    this.$store.commit(
-                        'rmSelectionFromBlock',
-                        {
-                            strParentBlockID: this.strParentBlockID,
-                            strCourseID: this.strCourseID,
-                        },
-                    )
+                    this.$store.commit('rmSelectionFromBlock', {
+                        strParentBlockID: this.strParentBlockID,
+                        strCourseID: this.strCourseID,
+                    });
                 }
                 this.$store.commit('setCourseSelectionStatus', {
                     short: this.course.s,
                     value,
-                })
+                });
             }
         },
     },
-}
+};
 </script>
 
 <style lang="scss">
-
-$green: rgba(151, 255, 183, 1.0);
+$green: rgba(151, 255, 183, 1);
 $green2: change-color($green, $lightness: 65%, $saturation: 40%);
 $green-top: change-color($green, $lightness: 100%, $saturation: 5%);
 $green-bottom: change-color($green, $lightness: 40%, $saturation: 60%);
 
-$blue: rgba(173, 238, 255, 1.0);
+$blue: rgba(173, 238, 255, 1);
 $blue2: change-color($blue, $lightness: 65%, $saturation: 40%);
 $blue-top: change-color($blue, $lightness: 100%, $saturation: 5%);
 $blue-bottom: change-color($blue, $lightness: 40%, $saturation: 60%);
@@ -121,7 +122,6 @@ $grey2: change-color($grey, $lightness: 75%);
 $grey-top: change-color($grey, $lightness: 100%);
 $grey-bottom: change-color($grey, $lightness: 40%);
 
-
 .c {
     user-select: none; /* standard syntax */
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
@@ -130,9 +130,9 @@ $grey-bottom: change-color($grey, $lightness: 40%);
     color: #282828 !important;
     display: inline-block;
     font-size: 0.9rem;
-    line-height: 0.90rem;
+    line-height: 0.9rem;
 
-    padding: 0.20rem;
+    padding: 0.2rem;
     margin: 0 4px 0 0;
 
     border-style: inset;
@@ -157,7 +157,6 @@ $grey-bottom: change-color($grey, $lightness: 40%);
     position: relative;
     bottom: 1px;
 }
-
 
 .c_available {
     box-shadow: inset 1px 1px 0 0 #ffffff;

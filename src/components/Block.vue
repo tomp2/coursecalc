@@ -9,14 +9,17 @@
     >
         {{ block_title }}
         <div class="d-flex flex-wrap">
-            <Course v-for="course in courses" :key="course.i.toString() + $store.state.keyp" :course="course"></Course>
+            <Course
+                v-for="course in courses"
+                :key="course.i.toString() + $store.state.keyp"
+                :course="course"
+            ></Course>
         </div>
-
     </v-alert>
 </template>
 
 <script>
-import Course from './Course'
+import Course from './Course';
 
 export default {
     name: 'block',
@@ -25,15 +28,13 @@ export default {
     computed: {
         dim: function () {
             if (this.block_title % 2 === 1) {
-                return 'blue'
+                return 'blue';
             } else {
-                return 'indigo'
+                return 'indigo';
             }
         },
     },
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

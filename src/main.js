@@ -1,22 +1,21 @@
-import Vue from 'vue'
-import App from './App.vue'
-import store from './store/store'
-import Vuex from 'vuex'
-import vuetify from './plugins/vuetify'
+import Vue from 'vue';
+import App from './App.vue';
+import store from './store/store';
+import Vuex from 'vuex';
+import vuetify from './plugins/vuetify';
 
-Vue.config.productionTip = false
-Vue.use(Vuex)
+Vue.config.productionTip = false;
+Vue.use(Vuex);
 
 new Vue({
     store,
     vuetify,
-    render: h => h(App),
-    beforeCreate () {
-        this.$store.commit('initStore')
+    render: (h) => h(App),
+    beforeCreate() {
+        this.$store.commit('initStore');
     },
-}).$mount('#app')
+}).$mount('#app');
 
 store.subscribe((mutation, state) => {
-    localStorage.setItem('vuex_store', JSON.stringify(state))
-})
-
+    localStorage.setItem('vuex_store', JSON.stringify(state));
+});

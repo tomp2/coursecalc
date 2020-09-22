@@ -9,4 +9,4 @@ export default [
     { text: 'Haukilahden lukio, Espoo', date: '26.8.2020' },
     { text: 'Otaniemen lukio, Espoo', date: '26.8.2020' },
     { text: 'Tapiolan lukio, Espoo', date: '26.8.2020' },
-]
+];

@@ -1,10 +1,5 @@
 <template>
-    <v-navigation-drawer
-        v-model="visible"
-        clipped
-        app
-        class="elevation-2"
-    >
+    <v-navigation-drawer v-model="visible" clipped app class="elevation-2">
         <v-list dense>
             <template v-for="item in drawerItems">
                 <v-list-item
@@ -48,7 +43,6 @@
                                 return-object
                                 persistent-hint
                             ></v-select>
-
                         </v-col>
                     </v-row>
                 </v-container>
@@ -59,9 +53,8 @@
                         text
                         color="primary"
                         @click="dialogs.createNewDialog.status = false"
-                    >Cancel
-                    </v-btn
-                    >
+                        >Cancel
+                    </v-btn>
                     <v-btn text @click="submitForm">Continue</v-btn>
                 </v-card-actions>
             </v-card>
@@ -80,7 +73,11 @@
                                 <v-text-field
                                     v-model="dialogs.savingDialog.saveName"
                                     label="Name for save"
-                                    :rules="[(v) =>v.length <= 50 || 'Name must be less than 30 characters',]"
+                                    :rules="[
+                                        (v) =>
+                                            v.length <= 50 ||
+                                            'Name must be less than 30 characters',
+                                    ]"
                                     :counter="50"
                                     required
                                 ></v-text-field>
@@ -94,24 +91,26 @@
                         color="blue darken-1"
                         text
                         @click="dialogs.savingDialog.status = false"
-                    >Close
-                    </v-btn
-                    >
-                    <v-btn color="blue darken-1" text @click="saveTray">Save</v-btn>
+                        >Close
+                    </v-btn>
+                    <v-btn color="blue darken-1" text @click="saveTray"
+                        >Save
+                    </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
 
         <!--Saves-->
         <v-dialog v-model="dialogs.savesDialog.status" max-width="400">
-            <!--Saves-->
             <v-card>
                 <v-card-title class="headline">
                     Open a Saved Tray
                 </v-card-title>
                 <v-card class="ma-3">
                     <v-list class="mx-auto">
-                        <v-list-item-group v-model="dialogs.savesDialog.selectionId">
+                        <v-list-item-group
+                            v-model="dialogs.savesDialog.selectionId"
+                        >
                             <v-list-item
                                 v-for="save in saves"
                                 :key="save.id"
@@ -119,7 +118,9 @@
                                 dense
                             >
                                 <v-list-item-content>
-                                    <v-list-item-title v-text="save.name"></v-list-item-title>
+                                    <v-list-item-title
+                                        v-text="save.name"
+                                    ></v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list-item-group>
@@ -130,7 +131,6 @@
                     <v-spacer></v-spacer>
                     <v-btn text color="error" @click="delSave">Delete</v-btn>
                     <v-btn text color="primary" @click="loadSave">Load</v-btn>
-
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -143,38 +143,78 @@
                         <v-col cols="12" md="12">
                             <h2>Start:</h2>
                             <ol>
-                                <li>Open the <strong>left</strong> navigation drawer from the top left burger menu icon.
+                                <li>
+                                    Open the <strong>left</strong> navigation
+                                    drawer from the top left burger menu icon.
                                 </li>
-                                <li>Click the <kbd>Create New Tray</kbd> button.</li>
-                                <li>Select your school from the dropdown menu and click <kbd>continue</kbd>.</li>
-                                <li>Open the <strong>right</strong> navigation drawer from right left burger icon.</li>
-                                <li>You can start by clicking <kbd>None</kbd> and then selecting the courses you need
-                                    to take this year. Blue = shown in the main tray, and Gray = hidden.
+                                <li>
+                                    Click the <kbd>Create New Tray</kbd> button.
                                 </li>
-                                <v-img src="../assets/example1.png" max-height="180" contain aspect-ratio="1.0"></v-img>
-
+                                <li>
+                                    Select your school from the dropdown menu
+                                    and click <kbd>continue</kbd>.
+                                </li>
+                                <li>
+                                    Open the <strong>right</strong> navigation
+                                    drawer from right left burger icon.
+                                </li>
+                                <li>
+                                    You can start by clicking
+                                    <kbd>None</kbd> and then selecting the
+                                    courses you need to take this year. Blue =
+                                    shown in the main tray, and Gray = hidden.
+                                </li>
+                                <v-img
+                                    src="../assets/example1.png"
+                                    max-height="180"
+                                    contain
+                                    aspect-ratio="1.0"
+                                ></v-img>
                             </ol>
                             <h2>Selections:</h2>
                             <ul>
                                 <li>
-                                    <img class="customIcon" src="../assets/unavailable.png" alt="unavailable course">
-                                    = Unavailable. The bar it is in has another selection.
+                                    <img
+                                        class="customIcon"
+                                        src="../assets/unavailable.png"
+                                        alt="unavailable course"
+                                    />
+                                    = Unavailable. The bar it is in has another
+                                    selection.
                                 </li>
                                 <li>
-                                    <img class="customIcon" src="../assets/available.png" alt="available course">
+                                    <img
+                                        class="customIcon"
+                                        src="../assets/available.png"
+                                        alt="available course"
+                                    />
                                     = Available, can be selected.
                                 </li>
                                 <li>
-                                    <img class="customIcon" src="../assets/selected.png" alt="selected course">
+                                    <img
+                                        class="customIcon"
+                                        src="../assets/selected.png"
+                                        alt="selected course"
+                                    />
                                     = Selected
                                 </li>
                                 <li>
-                                    <img class="customIcon" src="../assets/selected2.png" alt="selected2 course">
+                                    <img
+                                        class="customIcon"
+                                        src="../assets/selected2.png"
+                                        alt="selected2 course"
+                                    />
                                     = Selected elsewhere.
                                 </li>
                                 <li>
-                                    <img class="customIcon" src="../assets/forced.png" alt="forced course">
-                                    = Forced selection/Unavailable course selected. For multiple selections in same bar.
+                                    <img
+                                        class="customIcon"
+                                        src="../assets/forced.png"
+                                        alt="forced course"
+                                    />
+                                    = Forced selection/Unavailable course
+                                    selected. For multiple selections in same
+                                    bar.
                                 </li>
                             </ul>
                         </v-col>
@@ -183,7 +223,11 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="dialogs.helpDialog = false">
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="dialogs.helpDialog = false"
+                    >
                         Close
                     </v-btn>
                 </v-card-actions>
@@ -193,59 +237,71 @@
         <!--Contact-->
         <v-dialog v-model="dialogs.contactDialog" max-width="700">
             <v-card>
-                <v-card-title class="headline"> Feedback and contact</v-card-title>
+                <v-card-title class="headline">
+                    Feedback and contact
+                </v-card-title>
                 <v-card-text>
                     <p>
-                        For feedback:<br/><a style="cursor: text;"
-                    >feedback@lukiocoursecalc.com</a
-                    >
+                        For feedback:<br /><a style="cursor: text;"
+                            >feedback@lukiocoursecalc.com</a
+                        >
                     </p>
                     <p>
-                        And for contacting me: <br/><a style="cursor: text;"
-                    >contact@lukiocoursecalc.com</a
-                    >
+                        And for contacting me: <br /><a style="cursor: text;"
+                            >contact@lukiocoursecalc.com</a
+                        >
                     </p>
 
                     <iframe
                         src="https://docs.google.com/forms/d/e/1FAIpQLSeKKfaBvzXIKVGoPlNysBfDolnpjxCbS4rVz7u1NLZqxzcYxA/viewform?embedded=true"
                         width="640"
                         height="590"
-                    >Loading…
-                    </iframe
-                    >
+                        >Loading…
+                    </iframe>
                     <p>
                         Cant see the form? Click
                         <a
                             target="_blank"
                             href="https://docs.google.com/forms/d/e/1FAIpQLSeKKfaBvzXIKVGoPlNysBfDolnpjxCbS4rVz7u1NLZqxzcYxA/viewform?usp=sf_link"
-                        >here</a
+                            >here</a
                         >
                     </p>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="dialogs.contactDialog = false"
-                    >Close
-                    </v-btn
-                    >
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="dialogs.contactDialog = false"
+                        >Close
+                    </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
     </v-navigation-drawer>
 </template>
 
 <script>
-import presetOptions from '../../public/presetOptions'
+import presetOptions from '../../public/presetOptions';
 import {
-    mdiPlusBoxOutline, mdiZipDisk, mdiFolderOpenOutline,
-    mdiHelpCircleOutline, mdiCommentQuoteOutline, mdiDelete
-} from '@mdi/js'
-
+    mdiPlusBoxOutline,
+    mdiZipDisk,
+    mdiFolderOpenOutline,
+    mdiHelpCircleOutline,
+    mdiCommentQuoteOutline,
+    mdiDelete,
+} from '@mdi/js';
 
 export default {
     name: 'LeftDrawer',
     props: ['show'],
+    mounted() {
+        let localVuexStore = JSON.parse(localStorage.getItem('vuex_store'));
+        console.log(localVuexStore);
+        if (!localVuexStore) {
+            this.dialogs.createNewDialog.status = true;
+        }
+    },
     data() {
         return {
             icons: {
@@ -259,16 +315,16 @@ export default {
             textareaValue: '',
             visible: undefined,
             drawerItems: [
-                {icon: 'mdiPlusBoxOutline', text: 'New Tray'},
-                {icon: 'mdiZipDisk', text: 'Save'},
-                {icon: 'mdiFolderOpenOutline', text: 'Open'},
-                {icon: 'mdiHelpCircleOutline', text: 'Help'},
-                {icon: 'mdiCommentQuoteOutline', text: 'Contact & feedback'},
+                { icon: 'mdiPlusBoxOutline', text: 'New Tray' },
+                { icon: 'mdiZipDisk', text: 'Save' },
+                { icon: 'mdiFolderOpenOutline', text: 'Open' },
+                { icon: 'mdiHelpCircleOutline', text: 'Help' },
+                { icon: 'mdiCommentQuoteOutline', text: 'Contact & feedback' },
             ],
             dialogs: {
                 createNewDialog: {
                     status: false,
-                    selection: {text: 'None', date: '🤷'},
+                    selection: { text: 'None', date: '🤷' },
                 },
                 contactDialog: false,
                 helpDialog: false,
@@ -281,87 +337,88 @@ export default {
                     selectionId: '',
                 },
             },
-        }
+        };
     },
     methods: {
         clickLeftDrawer(button) {
             switch (button) {
                 case 'New Tray':
-                    this.dialogs.createNewDialog.status = true
-                    break
+                    this.dialogs.createNewDialog.status = true;
+                    break;
                 case 'Settings':
-                    this.dialogs.settingsDialog = true
-                    break
+                    this.dialogs.settingsDialog = true;
+                    break;
                 case 'Help':
-                    this.dialogs.helpDialog = true
-                    break
+                    this.dialogs.helpDialog = true;
+                    break;
                 case 'Contact & feedback':
-                    this.dialogs.contactDialog = true
-                    break
+                    this.dialogs.contactDialog = true;
+                    break;
                 case 'Save':
-                    this.dialogs.savingDialog.status = true
-                    break
+                    this.dialogs.savingDialog.status = true;
+                    break;
                 case 'Open':
-                    this.dialogs.savesDialog.status = true
-                    break
+                    this.dialogs.savesDialog.status = true;
+                    break;
             }
         },
 
         submitForm() {
-            let presetName = this.dialogs.createNewDialog.selection.text
-            this.dialogs.createNewDialog.status = false
+            let presetName = this.dialogs.createNewDialog.selection.text;
+            this.dialogs.createNewDialog.status = false;
 
             if (presetName !== 'None') {
-                this.$store.dispatch('submitPreset', presetName)
+                this.$store.dispatch('submitPreset', presetName);
             }
         },
 
         loadSave() {
-            let selection = this.dialogs.savesDialog.selectionId
+            let selection = this.dialogs.savesDialog.selectionId;
             if (selection) {
-                this.dialogs.savesDialog.status = false
-                this.$store.dispatch('loadSavedTray', selection)
+                this.dialogs.savesDialog.status = false;
+                this.$store.dispatch('loadSavedTray', selection);
             }
         },
 
         saveTray() {
-            let saveName = this.dialogs.savingDialog.saveName
+            let saveName = this.dialogs.savingDialog.saveName;
             if (saveName.length <= 50) {
-                this.dialogs.savingDialog.status = false
-                this.$store.dispatch('saveTrayByName', saveName)
+                this.dialogs.savingDialog.status = false;
+                this.$store.dispatch('saveTrayByName', saveName);
             }
         },
 
         delSave() {
-            this.$store.dispatch('delSaveById', this.dialogs.savesDialog.selectionId)
+            this.$store.dispatch(
+                'delSaveById',
+                this.dialogs.savesDialog.selectionId
+            );
         },
     },
     computed: {
         saves() {
-            return this.$store.getters.saved
+            return this.$store.getters.saved;
         },
         presets() {
-            return presetOptions
+            return presetOptions;
         },
     },
     watch: {
         show() {
-            this.visible = this.show
+            this.visible = this.show;
         },
         visible() {
-            this.$emit('update:rightLeftShow', this.visible)
+            this.$emit('update:rightLeftShow', this.visible);
         },
     },
-}
+};
 </script>
 
 <style scoped>
-
 .customIcon {
     width: auto;
     height: 1.5em;
     vertical-align: middle;
     margin: 3px;
 }
-
 </style>

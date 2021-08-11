@@ -16,15 +16,11 @@
                 @click.stop="drawerLeft = !drawerLeft"
             ></v-app-bar-nav-icon>
 
-            <v-toolbar-title style="width: 300px;" class="ml-0 pl-4">
+            <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
                 <span class="hidden-sm-and-down">CourseCalc</span>
             </v-toolbar-title>
 
             <v-spacer></v-spacer>
-
-            <v-switch v-model="isDark" hide-details color="info"></v-switch>
-            <span>&#8592;</span>
-            <v-icon class="mr-8">{{ mdiLightbulbOutline }}</v-icon>
 
             <v-app-bar-nav-icon
                 @click.stop="drawerRight = !drawerRight"
@@ -69,35 +65,23 @@
 </template>
 
 <script>
-import RightDrawer from './components/RightDrawer';
-import LeftDrawer from './components/LeftDrawer';
-import Block from './components/Block';
-import { mdiLightbulbOutline } from '@mdi/js';
+import RightDrawer from "./components/RightDrawer";
+import LeftDrawer from "./components/LeftDrawer";
+import Block from "./components/Block";
 
 export default {
     components: { Block, LeftDrawer, RightDrawer },
     created() {
-        this.textareaValue = JSON.parse(localStorage.getItem('textareaValue'));
-        this.isDark = JSON.parse(localStorage.getItem('isDark'));
+        this.textareaValue = JSON.parse(localStorage.getItem("textareaValue"));
     },
     data: () => ({
         drawerLeft: undefined,
         drawerRight: undefined,
-
-        mdiLightbulbOutline,
-
-        isDark: false,
         panels: [0, 1, 2, 3, 4],
     }),
     computed: {
         terms() {
             return this.$store.getters.open.trayData;
-        },
-    },
-    watch: {
-        isDark() {
-            this.$vuetify.theme.dark = this.isDark;
-            localStorage.setItem('isDark', JSON.stringify(this.isDark));
         },
     },
 };

@@ -19,18 +19,18 @@
 </template>
 
 <script>
-import Course from './Course';
+import Course from "./Course";
 
 export default {
-    name: 'block',
+    name: "block",
     components: { Course },
-    props: ['courses', 'block_title'],
+    props: ["courses", "block_title"],
     computed: {
         dim: function () {
             if (this.block_title % 2 === 1) {
-                return 'blue';
+                return "blue";
             } else {
-                return 'indigo';
+                return "indigo";
             }
         },
     },

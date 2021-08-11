@@ -14,8 +14,8 @@
 
 <script>
 export default {
-    name: 'courseOption',
-    props: ['course'],
+    name: "courseOption",
+    props: ["course"],
     computed: {
         courseValues() {
             return this.$store.getters.courses[this.course];
@@ -23,11 +23,11 @@ export default {
 
         selectionStatus() {
             if (this.courseValues.s) {
-                return 'c_selected';
+                return "c_selected";
             } else if (this.courseValues.v) {
-                return 'c_available';
+                return "c_available";
             } else {
-                return 'c_inactive';
+                return "c_inactive";
             }
         },
     },
@@ -38,7 +38,7 @@ export default {
                     shortName: this.course,
                     value: !this.courseValues.v,
                 };
-                this.$store.dispatch('setCourseVisibility', payload);
+                this.$store.dispatch("setCourseVisibility", payload);
             }
         },
     },

@@ -1,5 +1,24 @@
 <template>
     <v-navigation-drawer v-model="visible" clipped app class="elevation-2">
+        <v-container>
+            <v-slider
+                hide-details
+                min="0"
+                max="360"
+                v-model="hue"
+                label="Hue"
+                class="hue-slider"
+            ></v-slider>
+            <v-switch
+                v-model="isDark"
+                hide-details
+                color="info"
+                label="Dark mode"
+            ></v-switch>
+        </v-container>
+
+        <v-divider></v-divider>
+
         <v-list dense>
             <template v-for="item in drawerItems">
                 <v-list-item
@@ -22,9 +41,7 @@
         <!--Create New Tray-->
         <v-dialog v-model="dialogs.createNewDialog.status" width="800px">
             <v-card>
-                <v-card-title>
-                    Create New Course Tray
-                </v-card-title>
+                <v-card-title> Create New Course Tray </v-card-title>
 
                 <v-container>
                     <v-row class="mx-2">
@@ -94,8 +111,8 @@
                         >Close
                     </v-btn>
                     <v-btn color="blue darken-1" text @click="saveTray"
-                        >Save
-                    </v-btn>
+                        >Save</v-btn
+                    >
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -152,7 +169,8 @@
                                 </li>
                                 <li>
                                     Select your school from the dropdown menu
-                                    and click <kbd>continue</kbd>.
+                                    and click
+                                    <kbd>continue</kbd>.
                                 </li>
                                 <li>
                                     Open the <strong>right</strong> navigation
@@ -242,12 +260,12 @@
                 </v-card-title>
                 <v-card-text>
                     <p>
-                        For feedback:<br /><a style="cursor: text;"
+                        For feedback:<br /><a style="cursor: text"
                             >feedback@lukiocoursecalc.com</a
                         >
                     </p>
                     <p>
-                        And for contacting me: <br /><a style="cursor: text;"
+                        And for contacting me: <br /><a style="cursor: text"
                             >contact@lukiocoursecalc.com</a
                         >
                     </p>
@@ -282,7 +300,7 @@
 </template>
 
 <script>
-import presetOptions from '../../public/presetOptions';
+import presetOptions from "../../public/presetOptions";
 import {
     mdiPlusBoxOutline,
     mdiZipDisk,
@@ -290,17 +308,20 @@ import {
     mdiHelpCircleOutline,
     mdiCommentQuoteOutline,
     mdiDelete,
-} from '@mdi/js';
+} from "@mdi/js";
 
 export default {
-    name: 'LeftDrawer',
-    props: ['show'],
+    name: "LeftDrawer",
+    props: ["show"],
     mounted() {
-        let localVuexStore = JSON.parse(localStorage.getItem('vuex_store'));
+        let localVuexStore = JSON.parse(localStorage.getItem("vuex_store"));
         console.log(localVuexStore);
         if (!localVuexStore) {
             this.dialogs.createNewDialog.status = true;
         }
+    },
+    created() {
+        this.isDark = JSON.parse(localStorage.getItem("isDark"));
     },
     data() {
         return {
@@ -312,52 +333,54 @@ export default {
                 mdiCommentQuoteOutline,
                 mdiDelete,
             },
-            textareaValue: '',
+            textareaValue: "",
             visible: undefined,
             drawerItems: [
-                { icon: 'mdiPlusBoxOutline', text: 'New Tray' },
-                { icon: 'mdiZipDisk', text: 'Save' },
-                { icon: 'mdiFolderOpenOutline', text: 'Open' },
-                { icon: 'mdiHelpCircleOutline', text: 'Help' },
-                { icon: 'mdiCommentQuoteOutline', text: 'Contact & feedback' },
+                { icon: "mdiPlusBoxOutline", text: "New Tray" },
+                { icon: "mdiZipDisk", text: "Save" },
+                { icon: "mdiFolderOpenOutline", text: "Open" },
+                { icon: "mdiHelpCircleOutline", text: "Help" },
+                { icon: "mdiCommentQuoteOutline", text: "Contact & feedback" },
             ],
             dialogs: {
                 createNewDialog: {
                     status: false,
-                    selection: { text: 'None', date: '🤷' },
+                    selection: { text: "None", date: "🤷" },
                 },
                 contactDialog: false,
                 helpDialog: false,
                 savingDialog: {
                     status: false,
-                    saveName: '',
+                    saveName: "",
                 },
                 savesDialog: {
                     status: false,
-                    selectionId: '',
+                    selectionId: "",
                 },
             },
+            hue: 0,
+            isDark: false,
         };
     },
     methods: {
         clickLeftDrawer(button) {
             switch (button) {
-                case 'New Tray':
+                case "New Tray":
                     this.dialogs.createNewDialog.status = true;
                     break;
-                case 'Settings':
+                case "Settings":
                     this.dialogs.settingsDialog = true;
                     break;
-                case 'Help':
+                case "Help":
                     this.dialogs.helpDialog = true;
                     break;
-                case 'Contact & feedback':
+                case "Contact & feedback":
                     this.dialogs.contactDialog = true;
                     break;
-                case 'Save':
+                case "Save":
                     this.dialogs.savingDialog.status = true;
                     break;
-                case 'Open':
+                case "Open":
                     this.dialogs.savesDialog.status = true;
                     break;
             }
@@ -367,8 +390,8 @@ export default {
             let presetName = this.dialogs.createNewDialog.selection.text;
             this.dialogs.createNewDialog.status = false;
 
-            if (presetName !== 'None') {
-                this.$store.dispatch('submitPreset', presetName);
+            if (presetName !== "None") {
+                this.$store.dispatch("submitPreset", presetName);
             }
         },
 
@@ -376,7 +399,7 @@ export default {
             let selection = this.dialogs.savesDialog.selectionId;
             if (selection) {
                 this.dialogs.savesDialog.status = false;
-                this.$store.dispatch('loadSavedTray', selection);
+                this.$store.dispatch("loadSavedTray", selection);
             }
         },
 
@@ -384,13 +407,13 @@ export default {
             let saveName = this.dialogs.savingDialog.saveName;
             if (saveName.length <= 50) {
                 this.dialogs.savingDialog.status = false;
-                this.$store.dispatch('saveTrayByName', saveName);
+                this.$store.dispatch("saveTrayByName", saveName);
             }
         },
 
         delSave() {
             this.$store.dispatch(
-                'delSaveById',
+                "delSaveById",
                 this.dialogs.savesDialog.selectionId
             );
         },
@@ -408,17 +431,25 @@ export default {
             this.visible = this.show;
         },
         visible() {
-            this.$emit('update:rightLeftShow', this.visible);
+            this.$emit("update:rightLeftShow", this.visible);
+        },
+        hue() {
+            console.log("Hue Before:", this.hue);
+            console.log("Store Before:", this.$store.state.hue_shift);
+            this.$store.state.hue_shift = this.hue;
+            console.log("Store After:", this.$store.state.hue_shift);
+            console.log("Hue After:", this.hue);
+        },
+        isDark() {
+            this.$vuetify.theme.dark = this.isDark;
+            localStorage.setItem("isDark", JSON.stringify(this.isDark));
         },
     },
 };
 </script>
 
 <style scoped>
-.customIcon {
-    width: auto;
-    height: 1.5em;
-    vertical-align: middle;
-    margin: 3px;
+.hue-slider {
+    max-width: 200px;
 }
 </style>

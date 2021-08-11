@@ -15,8 +15,8 @@
 
 <script>
 export default {
-    name: 'Course',
-    props: ['course'],
+    name: "Course",
+    props: ["course"],
     data() {
         return {
             courseID: this.course.i,
@@ -45,57 +45,62 @@ export default {
         selectionStatus() {
             if (this.isSelected) {
                 if (this.strCourseID === this.parentBlockSelections[0]) {
-                    return 'c_selected';
+                    return "c_selected";
                 } else if (
                     this.parentBlockSelections.includes(this.strCourseID)
                 ) {
-                    return 'c_forced';
+                    return "c_forced";
                 } else {
-                    return 'c_selected--other';
+                    return "c_selected--other";
                 }
             } else if (this.parentBlockSelections.length > 0) {
-                return 'c_inactive--unavailable';
+                return "c_inactive--unavailable";
             } else {
-                return 'c_available';
+                return "c_available";
             }
         },
     },
     methods: {
         select() {
-            let value = 'none';
+            let value = "none";
             switch (this.selectionStatus) {
-                case 'c_available':
+                case "c_available":
                     value = true;
                     break;
-                case 'c_inactive--unavailable':
+                case "c_inactive--unavailable":
                     if (!this.isSelected) {
                         value = true;
                     }
                     break;
-                case 'c_selected':
+                case "c_selected":
                     value = false;
                     break;
-                case 'c_forced':
+                case "c_forced":
                     value = false;
                     break;
             }
-            if (value !== 'none') {
+            if (value !== "none") {
                 if (value) {
-                    this.$store.commit('addSelectionToBlock', {
+                    this.$store.commit("addSelectionToBlock", {
                         strParentBlockID: this.strParentBlockID,
                         strCourseID: this.strCourseID,
                     });
                 } else {
-                    this.$store.commit('rmSelectionFromBlock', {
+                    this.$store.commit("rmSelectionFromBlock", {
                         strParentBlockID: this.strParentBlockID,
                         strCourseID: this.strCourseID,
                     });
                 }
-                this.$store.commit('setCourseSelectionStatus', {
+                this.$store.commit("setCourseSelectionStatus", {
                     short: this.course.s,
                     value,
                 });
             }
+        },
+    },
+    watch: {
+        "$store.state.hue_shift": function () {
+            this.$el.style.filter = `hue-rotate(${this.$store.state.hue_shift}deg)`;
         },
     },
 };
@@ -108,9 +113,9 @@ $green-top: change-color($green, $lightness: 100%, $saturation: 5%);
 $green-bottom: change-color($green, $lightness: 40%, $saturation: 60%);
 
 $blue: rgba(173, 238, 255, 1);
-$blue2: change-color($blue, $lightness: 65%, $saturation: 40%);
+$blue2: change-color($blue, $lightness: 75%, $saturation: 40%);
 $blue-top: change-color($blue, $lightness: 100%, $saturation: 5%);
-$blue-bottom: change-color($blue, $lightness: 40%, $saturation: 60%);
+$blue-bottom: change-color($blue, $lightness: 45%, $saturation: 60%);
 
 $red: rgb(253, 182, 182);
 $red2: change-color($red, $lightness: 68%, $saturation: 66%);
@@ -145,7 +150,7 @@ $grey-bottom: change-color($grey, $lightness: 40%);
 .dark {
     color: #f1f1f1 !important;
     box-shadow: inset 0 0 0 0 transparent !important;
-    border-style: double;
+    border-style: solid;
 }
 
 .c:active {

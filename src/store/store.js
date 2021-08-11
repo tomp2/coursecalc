@@ -1,16 +1,16 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import { version } from '../../package.json';
-import presetsData from '../../public/presetsData';
+import Vue from "vue";
+import Vuex from "vuex";
+import { version } from "../../package.json";
+import presetsData from "../../public/presetsData";
 
 Vue.use(Vuex);
 
 let createId = function () {
-    return '_' + Math.random().toString(36).substr(2, 9);
+    return "_" + Math.random().toString(36).substr(2, 9);
 };
 
 const state = {
-    version: '',
+    version: "",
     keyp: undefined,
     open: {
         trayData: {},
@@ -18,6 +18,7 @@ const state = {
         blockSelections: {},
     },
     saved: {},
+    hue_shift: 0,
 };
 
 const getters = {
@@ -44,18 +45,18 @@ const actions = {
     ==============================================================*/
     submitPreset({ commit }, presetName) {
         let preset = presetsData[presetName];
-        commit('setTray', preset);
+        commit("setTray", preset);
     },
     loadSavedTray({ getters, commit }, id) {
         let save = JSON.parse(JSON.stringify(getters.saved[id]));
-        commit('setTray', save);
+        commit("setTray", save);
     },
 
     saveTrayByName({ commit }, name) {
-        commit('saveTrayByName', name);
+        commit("saveTrayByName", name);
     },
     delSaveById({ commit }, id) {
-        commit('delSaveById', id);
+        commit("delSaveById", id);
     },
 
     /*==============================================================
@@ -70,35 +71,35 @@ const actions = {
             courseSelected,
         } = payload;
         switch (selectionStatus) {
-            case 'c_available':
-                commit('setCourseSelectionStatus', { shortName, value: true });
-                commit('addSelectionToBlock', {
+            case "c_available":
+                commit("setCourseSelectionStatus", { shortName, value: true });
+                commit("addSelectionToBlock", {
                     strParentBlockID,
                     strCourseID,
                 });
                 break;
-            case 'c_inactive--unavailable':
+            case "c_inactive--unavailable":
                 if (!courseSelected) {
-                    commit('setCourseSelectionStatus', {
+                    commit("setCourseSelectionStatus", {
                         shortName,
                         value: true,
                     });
-                    commit('addSelectionToBlock', {
+                    commit("addSelectionToBlock", {
                         strParentBlockID,
                         strCourseID,
                     });
                 }
                 break;
-            case 'c_selected':
-                commit('setCourseSelectionStatus', { shortName, value: false });
-                commit('rmSelectionFromBlock', {
+            case "c_selected":
+                commit("setCourseSelectionStatus", { shortName, value: false });
+                commit("rmSelectionFromBlock", {
                     strParentBlockID,
                     strCourseID,
                 });
                 break;
-            case 'c_forced':
-                commit('setCourseSelectionStatus', { shortName, value: false });
-                commit('rmSelectionFromBlock', {
+            case "c_forced":
+                commit("setCourseSelectionStatus", { shortName, value: false });
+                commit("rmSelectionFromBlock", {
                     strParentBlockID,
                     strCourseID,
                 });
@@ -106,11 +107,11 @@ const actions = {
         }
     },
     setCourseVisibility({ commit }, payload) {
-        commit('setCourseVisibility', payload);
+        commit("setCourseVisibility", payload);
     },
     setCourseVisibilityAll({ commit }, value) {
         return new Promise((resolve) => {
-            commit('setCourseVisibilityAll', { value });
+            commit("setCourseVisibilityAll", { value });
             resolve();
         });
     },
@@ -169,16 +170,15 @@ const mutations = {
     },
     rmSelectionFromBlock(state, payload) {
         let { strParentBlockID, strCourseID } = payload;
-        state.open.blockSelections[
-            strParentBlockID
-        ] = state.open.blockSelections[strParentBlockID].filter(
-            (item) => item !== strCourseID
-        );
+        state.open.blockSelections[strParentBlockID] =
+            state.open.blockSelections[strParentBlockID].filter(
+                (item) => item !== strCourseID
+            );
     },
 
     initStore(state) {
         state.keyp = Math.random().toString();
-        let localVuexStore = JSON.parse(localStorage.getItem('vuex_store'));
+        let localVuexStore = JSON.parse(localStorage.getItem("vuex_store"));
         if (localVuexStore && localVuexStore.version === version) {
             this.replaceState(Object.assign(state, localVuexStore));
         } else {

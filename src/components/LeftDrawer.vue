@@ -300,7 +300,7 @@
 </template>
 
 <script>
-import presetOptions from "../../public/presetOptions";
+import presetOptions from "../../public/presetOptions.json";
 import {
     mdiPlusBoxOutline,
     mdiZipDisk,

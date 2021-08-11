@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { version } from "../../package.json";
-import presetsData from "../../public/presetsData";
+import presetsData from "../../public/presetsData.json";
 
 Vue.use(Vuex);
 

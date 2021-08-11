@@ -6,10 +6,10 @@
         clipped
         right
         class="elevation-2 scroll-visible"
-        :width="$vuetify.breakpoint.width >= 900 ? 300 : 210"
+        :width="$vuetify.breakpoint.width >= 900 ? 350 : 210"
     >
         <v-container class="fill-height align-start" fluid>
-            <v-row align="center" justify="center">
+            <v-row align="center" justify="center" class="mr-n1 ml-n1">
                 <v-btn
                     class="ma-2"
                     outlined
@@ -46,12 +46,12 @@
 </template>
 
 <script>
-import CourseOption from './Course_Option';
+import CourseOption from "./Course_Option";
 
 export default {
-    name: 'RightDrawer',
+    name: "RightDrawer",
     components: { CourseOption },
-    props: ['show'],
+    props: ["show"],
     data: () => ({
         loading: false,
         visible: undefined,
@@ -59,21 +59,21 @@ export default {
     methods: {
         selectAll() {
             this.loading = true;
-            this.$store.dispatch('setCourseVisibilityAll', true).then(() => {
+            this.$store.dispatch("setCourseVisibilityAll", true).then(() => {
                 this.loading = false;
             });
         },
         deSelectAll() {
             this.loading = true;
-            this.$store.dispatch('setCourseVisibilityAll', false).then(() => {
+            this.$store.dispatch("setCourseVisibilityAll", false).then(() => {
                 this.loading = false;
             });
         },
         dim: function (int) {
             if (int % 2 === 0) {
-                return 'px-2 py-1 ma-1 elevation-1 rounded even';
+                return "px-2 py-1 ma-1 elevation-1 rounded even";
             } else {
-                return 'px-2 py-1 ma-1 elevation-1 rounded odd';
+                return "px-2 py-1 ma-1 elevation-1 rounded odd";
             }
         },
     },
@@ -83,7 +83,7 @@ export default {
         },
         subjectList() {
             let courses = [...Object.keys(this.allCourses)].sort();
-            let MATCH = RegExp('[A-ZÄÖ ]+', 'g');
+            let MATCH = RegExp("[A-ZÄÖ ]+", "g");
             let data = {};
             for (const course of courses) {
                 let subject = course.match(MATCH)[0];
@@ -101,7 +101,7 @@ export default {
             this.visible = this.show;
         },
         visible() {
-            this.$emit('update:rightDrawerShow', this.visible);
+            this.$emit("update:rightDrawerShow", this.visible);
         },
     },
 };

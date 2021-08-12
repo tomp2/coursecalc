@@ -1,7 +1,7 @@
 # coursecalc
 
 Small VueJS practice project. Its purpose is to make it easier to plan the courses you have to select for the semester.
-![preview](https://i.imgur.com/tOBOiMV.jpg)
+![screenshot](screenshot.jpg)
 
 -   Grays out already selected courses from elsewhere
 -   Indicates selections clearly with green and red

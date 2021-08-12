@@ -10,7 +10,9 @@ Small VueJS practice project. Its purpose is to make it easier to plan the cours
 
 ---
 
-# project
+
+
+
 
 ## Project setup
 
